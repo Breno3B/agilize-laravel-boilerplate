@@ -9,9 +9,9 @@ use Illuminate\Support\Str;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="question")
+ * @ORM\Table(name="answer")
  */
-class Question
+class Answer
 {
     use TimestampableEntity;
 
@@ -27,13 +27,19 @@ class Question
     protected string $description;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected bool $correct;
+
+    /**
      * @param  string  $name
      * @param  string  $description
      */
-    public function __construct(string $name, string $description)
+    public function __construct(string $name, string $description, bool $correct)
     {
         $this->id = Str::uuid()->toString();
         $this->description = $description;
+        $this->correct = $correct;
     }
 
     /**
@@ -60,4 +66,19 @@ class Question
         $this->description = $description;
     }
 
+    /**
+     * @return bool
+     */
+    public function isCorrect(): bool
+    {
+        return $this->correct;
+    }
+
+    /**
+     * @param  bool  $correct
+     */
+    public function setCorrect(bool $correct): void
+    {
+        $this->correct = $correct;
+    }
 }
