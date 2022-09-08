@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Packages\Exam\Model;
+namespace App\Packages\Exams\Model;
 
 
 use Doctrine\ORM\Mapping as ORM;
