@@ -12,3 +12,4 @@ Homestead.yaml
 .php_cs.cache
 /aws
 .env
+test.php
