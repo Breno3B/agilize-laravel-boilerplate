@@ -22,7 +22,7 @@ class Theme
     protected string $id;
 
     /**
-     * @ORM\Column(type="string", unique=true, length=64)
+     * @ORM\Column(type="string", unique=true, length=32)
      */
     protected string $name;
 
@@ -81,5 +81,4 @@ class Theme
     {
         $this->description = $description;
     }
-
 }
