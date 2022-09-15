@@ -27,7 +27,7 @@ class Theme
     protected string $name;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     protected string $description;
 
