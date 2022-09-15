@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Packages\Users\Model;
+namespace App\Packages\Student\Model;
 
 
 use Doctrine\ORM\Mapping as ORM;
@@ -9,9 +9,9 @@ use Illuminate\Support\Str;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="student")
  */
-class User
+class Student
 {
     use TimestampableEntity;
 
@@ -58,5 +58,4 @@ class User
     {
         $this->name = $name;
     }
-
 }
