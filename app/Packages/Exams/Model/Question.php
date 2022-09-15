@@ -21,16 +21,18 @@ class Question
      */
     protected string $id;
 
+//    theme_id
+
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string")
      */
     protected string $description;
 
     /**
-     * @param  string  $name
+     * @param  string  $id
      * @param  string  $description
      */
-    public function __construct(string $name, string $description)
+    public function __construct(string $id, string $description)
     {
         $this->id = Str::uuid()->toString();
         $this->description = $description;
@@ -59,5 +61,4 @@ class Question
     {
         $this->description = $description;
     }
-
 }
