@@ -15,8 +15,6 @@ use Illuminate\Support\Str;
  */
 class Exam
 {
-    //    #################### ATTRIBUTES ####################
-
     use TimestampableEntity;
 
     /**
@@ -60,8 +58,6 @@ class Exam
      */
     protected Datetime $finishedAt;
 
-    //    #################### CONSTRUCTOR ####################
-
     /**
      * @param  Student   $student
      * @param  Theme     $theme
@@ -89,8 +85,6 @@ class Exam
         $this->startedAt = $startedAt;
         $this->finishedAt = $finishedAt;
     }
-
-    //    #################### GETTERS ####################
 
     /**
      * @return string
@@ -125,6 +119,14 @@ class Exam
     }
 
     /**
+     * @param  string  $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
      * @return int
      */
     public function getQuantityOfQuestions(): int
@@ -141,32 +143,6 @@ class Exam
     }
 
     /**
-     * @return DateTime
-     */
-    public function getStartedAt(): DateTime
-    {
-        return $this->startedAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getFinishedAt(): DateTime
-    {
-        return $this->finishedAt;
-    }
-
-//    #################### SETTERS ####################
-
-    /**
-     * @param  string  $status
-     */
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
-    }
-
-    /**
      * @param  float  $totalScore
      */
     public function setTotalScore(float $totalScore): void
@@ -175,11 +151,27 @@ class Exam
     }
 
     /**
+     * @return DateTime
+     */
+    public function getStartedAt(): DateTime
+    {
+        return $this->startedAt;
+    }
+
+    /**
      * @param  DateTime  $startedAt
      */
     public function setStartedAt(DateTime $startedAt): void
     {
         $this->startedAt = $startedAt;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getFinishedAt(): DateTime
+    {
+        return $this->finishedAt;
     }
 
     /**
