@@ -21,7 +21,10 @@ class ExamQuestion
      */
     protected string $id;
 
-//    exam_id
+    /**
+     * @ORM\ManyToOne(targetEntity="Exam")
+     */
+    protected Exam $exam;
 
     /**
      * @ORM\Column(type="string")
@@ -33,12 +36,15 @@ class ExamQuestion
      */
     protected float $questionValue;
 
+
     /**
+     * @param  Exam    $exam
      * @param  string  $description
      * @param  float   $questionValue
      */
-    public function __construct(string $description, float $questionValue) {
+    public function __construct(Exam $exam, string $description, float $questionValue) {
         $this->id = Str::uuid()->toString();
+        $this->exam = $exam;
         $this->description = $description;
         $this->questionValue = $questionValue;
     }
@@ -52,6 +58,14 @@ class ExamQuestion
     }
 
     /**
+     * @return Exam
+     */
+    public function getExam(): Exam
+    {
+        return $this->exam;
+    }
+
+    /**
      * @return string
      */
     public function getDescription(): string
@@ -60,26 +74,10 @@ class ExamQuestion
     }
 
     /**
-     * @param  string  $description
-     */
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
      * @return float
      */
     public function getQuestionValue(): float
     {
         return $this->questionValue;
-    }
-
-    /**
-     * @param  float  $questionValue
-     */
-    public function setQuestionValue(float $questionValue): void
-    {
-        $this->questionValue = $questionValue;
     }
 }
