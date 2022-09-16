@@ -21,7 +21,10 @@ class ExamAlternative
      */
     protected string $id;
 
-//    exam_question_id
+    /**
+     * @ORM\ManyToOne(targetEntity="ExamQuestion")
+     */
+    protected ExamQuestion $examQuestion;
 
     /**
      * @ORM\Column(type="string")
@@ -39,12 +42,14 @@ class ExamAlternative
     protected bool $isChosen;
 
     /**
+     * @param  ExamQuestion  $examQuestion
      * @param  string  $description
-     * @param  bool    $isCorrect
-     * @param  bool    $isChosen
+     * @param  bool  $isCorrect
+     * @param  bool  $isChosen
      */
-    public function __construct(string $description, bool $isCorrect, bool $isChosen) {
+    public function __construct(ExamQuestion $examQuestion, string $description, bool $isCorrect, bool $isChosen) {
         $this->id = Str::uuid()->toString();
+        $this->examQuestion = $examQuestion;
         $this->description = $description;
         $this->isCorrect = $isCorrect;
         $this->isChosen = $isChosen;
@@ -67,27 +72,11 @@ class ExamAlternative
     }
 
     /**
-     * @param  string  $description
-     */
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
      * @return bool
      */
     public function isCorrect(): bool
     {
         return $this->isCorrect;
-    }
-
-    /**
-     * @param  bool  $isCorrect
-     */
-    public function setIsCorrect(bool $isCorrect): void
-    {
-        $this->isCorrect = $isCorrect;
     }
 
     /**
