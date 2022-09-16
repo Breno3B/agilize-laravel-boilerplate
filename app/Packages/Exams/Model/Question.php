@@ -21,7 +21,10 @@ class Question
      */
     protected string $id;
 
-//    theme_id
+    /**
+     * @ORM\ManyToOne(targetEntity="Theme")
+     */
+    protected Theme $theme;
 
     /**
      * @ORM\Column(type="string")
@@ -29,11 +32,13 @@ class Question
     protected string $description;
 
     /**
+     * @param  Theme   $theme
      * @param  string  $description
      */
-    public function __construct(string $description)
+    public function __construct(Theme $theme, string $description)
     {
         $this->id = Str::uuid()->toString();
+        $this->theme = $theme;
         $this->description = $description;
     }
 
@@ -43,6 +48,22 @@ class Question
     public function getId(): string
     {
         return $this->id;
+    }
+
+    /**
+     * @return Theme
+     */
+    public function getTheme(): Theme
+    {
+        return $this->theme;
+    }
+
+    /**
+     * @param  Theme  $theme
+     */
+    public function setTheme(Theme $theme): void
+    {
+        $this->theme = $theme;
     }
 
     /**
