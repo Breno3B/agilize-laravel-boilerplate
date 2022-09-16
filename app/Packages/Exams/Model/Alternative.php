@@ -21,7 +21,10 @@ class Alternative
      */
     protected string $id;
 
-//    question_id
+    /**
+     * @ORM\ManyToOne(targetEntity="Question")
+     */
+    protected Question $question;
 
     /**
      * @ORM\Column(type="string")
@@ -34,11 +37,13 @@ class Alternative
     protected bool $isCorrect;
 
     /**
+     * @param  Question  $question
      * @param  string  $description
-     * @param  bool    $isCorrect
+     * @param  bool  $isCorrect
      */
-    public function __construct(string $description, bool $isCorrect) {
+    public function __construct(Question $question, string $description, bool $isCorrect) {
         $this->id = Str::uuid()->toString();
+        $this->question = $question;
         $this->description = $description;
         $this->isCorrect = $isCorrect;
     }
@@ -49,6 +54,22 @@ class Alternative
     public function getId(): string
     {
         return $this->id;
+    }
+
+    /**
+     * @return Question
+     */
+    public function getQuestion(): Question
+    {
+        return $this->question;
+    }
+
+    /**
+     * @param  Question  $question
+     */
+    public function setQuestion(Question $question): void
+    {
+        $this->question = $question;
     }
 
     /**
