@@ -29,10 +29,9 @@ class Question
     protected string $description;
 
     /**
-     * @param  string  $id
      * @param  string  $description
      */
-    public function __construct(string $id, string $description)
+    public function __construct(string $description)
     {
         $this->id = Str::uuid()->toString();
         $this->description = $description;
