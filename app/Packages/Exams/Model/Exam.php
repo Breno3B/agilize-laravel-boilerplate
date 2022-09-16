@@ -3,6 +3,7 @@
 namespace App\Packages\Exams\Model;
 
 
+use App\Packages\Student\Model\Student;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -14,6 +15,8 @@ use Illuminate\Support\Str;
  */
 class Exam
 {
+    //    #################### ATTRIBUTES ####################
+
     use TimestampableEntity;
 
     /**
@@ -22,9 +25,15 @@ class Exam
      */
     protected string $id;
 
-//    studentId
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Packages\Student\Model\Student")
+     */
+    protected Student $student;
 
-//    themeId
+    /**
+     * @ORM\ManyToOne(targetEntity="Theme")
+     */
+    protected Theme $theme;
 
     /**
      * @ORM\Column(type="string", length=16)
@@ -51,14 +60,20 @@ class Exam
      */
     protected Datetime $finishedAt;
 
+    //    #################### CONSTRUCTOR ####################
+
     /**
-     * @param  string  $status
-     * @param  int  $quantityOfQuestions
-     * @param  float  $totalScore
+     * @param  Student   $student
+     * @param  Theme     $theme
+     * @param  string    $status
+     * @param  int       $quantityOfQuestions
+     * @param  float     $totalScore
      * @param  DateTime  $startedAt
      * @param  DateTime  $finishedAt
      */
     public function __construct(
+        Student $student,
+        Theme $theme,
         string $status,
         int $quantityOfQuestions,
         float $totalScore,
@@ -66,6 +81,8 @@ class Exam
         DateTime $finishedAt
     ) {
         $this->id = Str::uuid()->toString();
+        $this->student = $student;
+        $this->theme = $theme;
         $this->status = $status;
         $this->quantityOfQuestions = $quantityOfQuestions;
         $this->totalScore = $totalScore;
@@ -73,12 +90,30 @@ class Exam
         $this->finishedAt = $finishedAt;
     }
 
+    //    #################### GETTERS ####################
+
     /**
      * @return string
      */
     public function getId(): string
     {
         return $this->id;
+    }
+
+    /**
+     * @return Student
+     */
+    public function getStudent(): Student
+    {
+        return $this->student;
+    }
+
+    /**
+     * @return Theme
+     */
+    public function getTheme(): Theme
+    {
+        return $this->theme;
     }
 
     /**
@@ -90,27 +125,11 @@ class Exam
     }
 
     /**
-     * @param  string  $status
-     */
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
-    }
-
-    /**
      * @return int
      */
     public function getQuantityOfQuestions(): int
     {
         return $this->quantityOfQuestions;
-    }
-
-    /**
-     * @param  int  $quantityOfQuestions
-     */
-    public function setQuantityOfQuestions(int $quantityOfQuestions): void
-    {
-        $this->quantityOfQuestions = $quantityOfQuestions;
     }
 
     /**
@@ -122,14 +141,6 @@ class Exam
     }
 
     /**
-     * @param  float  $totalScore
-     */
-    public function setTotalScore(float $totalScore): void
-    {
-        $this->totalScore = $totalScore;
-    }
-
-    /**
      * @return DateTime
      */
     public function getStartedAt(): DateTime
@@ -138,19 +149,37 @@ class Exam
     }
 
     /**
-     * @param  DateTime  $startedAt
-     */
-    public function setStartedAt(DateTime $startedAt): void
-    {
-        $this->startedAt = $startedAt;
-    }
-
-    /**
      * @return DateTime
      */
     public function getFinishedAt(): DateTime
     {
         return $this->finishedAt;
+    }
+
+//    #################### SETTERS ####################
+
+    /**
+     * @param  string  $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @param  float  $totalScore
+     */
+    public function setTotalScore(float $totalScore): void
+    {
+        $this->totalScore = $totalScore;
+    }
+
+    /**
+     * @param  DateTime  $startedAt
+     */
+    public function setStartedAt(DateTime $startedAt): void
+    {
+        $this->startedAt = $startedAt;
     }
 
     /**
