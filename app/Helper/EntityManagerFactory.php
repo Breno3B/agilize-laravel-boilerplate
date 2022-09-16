@@ -7,6 +7,10 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\ORMSetup;
 
+/**
+ * Class EntityManagerFactory
+ * @package App\Helper
+ */
 class EntityManagerFactory
 {
     /**
