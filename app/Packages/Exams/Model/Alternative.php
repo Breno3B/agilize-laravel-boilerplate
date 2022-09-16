@@ -29,7 +29,7 @@ class Alternative
     protected string $description;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      */
     protected bool $isCorrect;
 
@@ -37,10 +37,7 @@ class Alternative
      * @param  string  $description
      * @param  bool    $isCorrect
      */
-    public function __construct(
-        string $description,
-        bool $isCorrect
-    ) {
+    public function __construct(string $description, bool $isCorrect) {
         $this->id = Str::uuid()->toString();
         $this->description = $description;
         $this->isCorrect = $isCorrect;
