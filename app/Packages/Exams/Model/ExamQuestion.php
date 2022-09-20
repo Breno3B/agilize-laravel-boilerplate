@@ -36,7 +36,6 @@ class ExamQuestion
      */
     protected float $questionValue;
 
-
     /**
      * @param  Exam    $exam
      * @param  string  $description
