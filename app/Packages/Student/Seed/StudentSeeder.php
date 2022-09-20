@@ -20,7 +20,6 @@ class StudentSeeder extends Seeder
     public function run(): void
     {
         EntityManager::persist(new Student('Breno Rodrigues'));
-
         EntityManager::flush();
     }
 }
