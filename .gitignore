@@ -12,4 +12,18 @@ Homestead.yaml
 .php_cs.cache
 /aws
 .env
+
+# Custom
 test.php
+/node_modules
+/public/hot
+.terraform/.terraform*
+.env.backup
+npm-debug.log
+yarn-error.log
+/.vscode
+/storage/.key
+/storage/app/tmp/*
+/storage/framework/cache/*
+/app/logs/
+/storage/proxies/
