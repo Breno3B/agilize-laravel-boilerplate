@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 
+ use App\Packages\Exams\Seed\AlternativeSeeder;
  use App\Packages\Exams\Seed\QuestionSeeder;
  use App\Packages\Exams\Seed\ThemeSeeder;
  use App\Packages\Student\Seed\StudentSeeder;
@@ -22,6 +23,7 @@ namespace Database\Seeders;
                 StudentSeeder::class,
                 ThemeSeeder::class,
                 QuestionSeeder::class,
+                AlternativeSeeder::class
             ]
         );
     }
