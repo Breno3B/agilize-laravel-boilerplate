@@ -48,3 +48,9 @@ Route::post('/alternative', [AlternativeController::class, 'store']);
 Route::put('/alternative/{id}', [AlternativeController::class, 'update']);
 Route::get('/alternative/{id}', [AlternativeController::class, 'show']);
 Route::delete('/alternative/{id}', [AlternativeController::class, 'destroy']);
+
+Route::get('/exam', [ExamController::class, 'index']);
+Route::post('/exam', [ExamController::class, 'store']);
+Route::put('/exam/{id}', [ExamController::class, 'update']);
+Route::get('/exam/{id}', [ExamController::class, 'show']);
+Route::delete('/exam/{id}', [ExamController::class, 'destroy']);
