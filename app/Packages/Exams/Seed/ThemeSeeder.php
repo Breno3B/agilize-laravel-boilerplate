@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Packages\Student\Seed;
+namespace App\Packages\Exams\Seed;
 
-
-use App\Packages\Student\Model\Student;
+use App\Packages\Exams\Model\Theme;
 use Illuminate\Database\Seeder;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 
-class StudentSeeder extends Seeder
+class ThemeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +15,7 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        EntityManager::persist(new Student('Breno Rodrigues'));
+        EntityManager::persist(new Theme('Matemática'));
         EntityManager::flush();
     }
 }

@@ -32,10 +32,10 @@ class Theme
     protected string $description;
 
     /**
-     * @param  string  $name
-     * @param  string  $description
+     * @param  string       $name
+     * @param  string|null  $description
      */
-    public function __construct(string $name, string $description) {
+    public function __construct(string $name, string $description = null) {
         $this->id = Str::uuid()->toString();
         $this->name = $name;
         $this->description = $description;

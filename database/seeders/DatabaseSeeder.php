@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 
+ use App\Packages\Exams\Seed\ThemeSeeder;
  use App\Packages\Student\Seed\StudentSeeder;
  use Illuminate\Database\Seeder;
 
@@ -18,6 +19,7 @@ namespace Database\Seeders;
         $this->call(
             [
                 StudentSeeder::class,
+                ThemeSeeder::class,
             ]
         );
     }
