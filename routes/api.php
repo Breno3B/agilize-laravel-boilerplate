@@ -1,5 +1,6 @@
 <?php
 
+use App\Packages\Exams\Controller\ThemeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::get('/healthcheck', function () {
+    return json_encode(['status' => true]);
 });
+
+
+Route::get('/temas', [ThemeController::class, 'index']);
+Route::post('/temas', [ThemeController::class, 'store']);
+Route::put('/temas/{id}', [ThemeController::class, 'update']);
+Route::get('/temas/{id}', [ThemeController::class, 'show']);
+Route::delete('/temas/{id}', [ThemeController::class, 'destroy']);
