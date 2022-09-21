@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 
+ use App\Packages\Exams\Seed\QuestionSeeder;
  use App\Packages\Exams\Seed\ThemeSeeder;
  use App\Packages\Student\Seed\StudentSeeder;
  use Illuminate\Database\Seeder;
@@ -20,6 +21,7 @@ namespace Database\Seeders;
             [
                 StudentSeeder::class,
                 ThemeSeeder::class,
+                QuestionSeeder::class,
             ]
         );
     }
