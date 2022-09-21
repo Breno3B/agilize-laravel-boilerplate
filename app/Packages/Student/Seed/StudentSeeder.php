@@ -2,7 +2,6 @@
 
 namespace App\Packages\Student\Seed;
 
-
 use App\Packages\Student\Model\Student;
 use Illuminate\Database\Seeder;
 use LaravelDoctrine\ORM\Facades\EntityManager;

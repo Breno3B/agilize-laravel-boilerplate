@@ -27,15 +27,15 @@ class Theme
     protected string $name;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected string $description;
 
     /**
-     * @param  string       $name
-     * @param  string|null  $description
+     * @param  string  $name
+     * @param  string  $description
      */
-    public function __construct(string $name, string $description = null) {
+    public function __construct(string $name, string $description) {
         $this->id = Str::uuid()->toString();
         $this->name = $name;
         $this->description = $description;
@@ -66,9 +66,9 @@ class Theme
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): string|null
     {
         return $this->description;
     }

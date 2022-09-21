@@ -15,7 +15,10 @@ class ThemeSeeder extends Seeder
      */
     public function run(): void
     {
-        EntityManager::persist(new Theme('Matemática'));
+        EntityManager::persist(new Theme(
+            'Matemática',
+            'O tema Matemática inclui questões de cálculo, geometria, trigonometria, estatística, álgebra, funções, etc.'
+        ));
         EntityManager::flush();
     }
 }
