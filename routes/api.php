@@ -1,5 +1,6 @@
 <?php
 
+use App\Packages\Exams\Controller\AlternativeController;
 use App\Packages\Exams\Controller\QuestionController;
 use App\Packages\Student\Controller\StudentController;
 use Illuminate\Http\Request;
@@ -41,3 +42,9 @@ Route::post('/question', [QuestionController::class, 'store']);
 Route::put('/question/{id}', [QuestionController::class, 'update']);
 Route::get('/question/{id}', [QuestionController::class, 'show']);
 Route::delete('/question/{id}', [QuestionController::class, 'destroy']);
+
+Route::get('/alternative', [AlternativeController::class, 'index']);
+Route::post('/alternative', [AlternativeController::class, 'store']);
+Route::put('/alternative/{id}', [AlternativeController::class, 'update']);
+Route::get('/alternative/{id}', [AlternativeController::class, 'show']);
+Route::delete('/alternative/{id}', [AlternativeController::class, 'destroy']);
