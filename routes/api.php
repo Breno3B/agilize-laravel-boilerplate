@@ -1,6 +1,7 @@
 <?php
 
 use App\Packages\Exams\Controller\AlternativeController;
+use App\Packages\Exams\Controller\ExamController;
 use App\Packages\Exams\Controller\QuestionController;
 use App\Packages\Student\Controller\StudentController;
 use Illuminate\Http\Request;
