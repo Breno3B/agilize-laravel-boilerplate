@@ -3,8 +3,8 @@
 use App\Packages\Exams\Controller\AlternativeController;
 use App\Packages\Exams\Controller\ExamController;
 use App\Packages\Exams\Controller\QuestionController;
+use App\Packages\Exams\Controller\ThemeController;
 use App\Packages\Student\Controller\StudentController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,11 +32,11 @@ Route::put('/student', [StudentController::class, 'update']);
 Route::get('/student/{id}', [StudentController::class, 'show']);
 Route::delete('/student/{id}', [StudentController::class, 'destroy']);
 
-Route::get('/theme', [QuestionController::class, 'index']);
-Route::post('/theme', [QuestionController::class, 'store']);
-Route::put('/theme/{id}', [QuestionController::class, 'update']);
-Route::get('/theme/{id}', [QuestionController::class, 'show']);
-Route::delete('/theme/{id}', [QuestionController::class, 'destroy']);
+Route::get('/theme', [ThemeController::class, 'index']);
+Route::post('/theme', [ThemeController::class, 'store']);
+Route::put('/theme/{id}', [ThemeController::class, 'update']);
+Route::get('/theme/{id}', [ThemeController::class, 'show']);
+Route::delete('/theme/{id}', [ThemeController::class, 'destroy']);
 
 Route::get('/question', [QuestionController::class, 'index']);
 Route::post('/question', [QuestionController::class, 'store']);

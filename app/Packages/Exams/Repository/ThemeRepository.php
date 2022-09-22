@@ -10,6 +10,18 @@ class ThemeRepository extends AbstractRepository
 {
     public string $entityName = Theme::class;
 
+    public function index(): array
+    {
+        return $this->findAll();
+    }
+
+    public function store(Theme $theme): Theme
+    {
+        $this->getEntityManager()->persist($theme);
+        $this->getEntityManager()->flush();
+        return $theme;
+    }
+
     public function findOneByName(string $name): ?Theme
     {
         return $this->findOneBy(['name' => $name]);
