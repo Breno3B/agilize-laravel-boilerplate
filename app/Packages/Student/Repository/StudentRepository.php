@@ -10,11 +10,6 @@ class StudentRepository extends AbstractRepository
 {
     public string $entityName = Student::class;
 
-    public function Index(): array
-    {
-        return $this->findAll();
-    }
-
     public function store(Student $student): Student
     {
         $this->getEntityManager()->persist($student);
@@ -22,8 +17,18 @@ class StudentRepository extends AbstractRepository
         return $student;
     }
 
+    public function findAllStudents(): array
+    {
+        return $this->findAll();
+    }
+
     public function findOneByName(string $name): ?Student
     {
         return $this->findOneBy(['name' => $name]);
+    }
+
+    public function findOneById(string $id): ?Student
+    {
+        return $this->findOneBy(['id' => $id]);
     }
 }

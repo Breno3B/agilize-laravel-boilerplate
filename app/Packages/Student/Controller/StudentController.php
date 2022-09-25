@@ -4,7 +4,7 @@ namespace App\Packages\Student\Controller;
 
 
 use App\Http\Controllers\Controller;
-use App\Packages\Student\Model\Student;
+use App\Packages\Student\Facade\StudentFacade;
 use App\Packages\Student\Repository\StudentRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,25 +12,23 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     public function __construct(
-        protected StudentRepository $studentRepository
+        protected StudentRepository $studentRepository,
+        protected StudentFacade $studentFacade
     )
     {
     }
 
-    public function index(): array
+    public function index(): JsonResponse
     {
-        return $this->studentRepository->Index();
+        $students = $this->studentFacade->index();
+        return response()->json($students->toArray(), 200);
     }
 
     public function store(Request $request): JsonResponse
     {
-        $student = new Student(
-            $request->get('name')
-        );
-
-        $this->studentRepository->store($student);
-
-        return response()->json($student->getName(), 201);
+        $name = $request->get('name');
+        $student = $this->studentFacade->store($name);
+        return response()->json($student->toArray(), 201);
     }
 
     public function update()
