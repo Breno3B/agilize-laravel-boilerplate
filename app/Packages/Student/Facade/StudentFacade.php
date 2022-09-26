@@ -78,7 +78,6 @@ class StudentFacade
     public function destroy(string $id): void
     {
         $student = $this->studentRepository->findOneById($id);
-
         $this->studentRepository->destroy($student);
     }
 }

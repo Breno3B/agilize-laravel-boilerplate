@@ -22,6 +22,17 @@ class ThemeRepository extends AbstractRepository
         return $theme;
     }
 
+    public function destroy(Theme $theme): void
+    {
+        $this->getEntityManager()->remove($theme);
+        $this->getEntityManager()->flush();
+    }
+
+    public function findOneById(string $id): ?Theme
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
     public function findOneByName(string $name): ?Theme
     {
         return $this->findOneBy(['name' => $name]);

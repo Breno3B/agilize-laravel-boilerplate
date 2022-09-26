@@ -4,48 +4,50 @@ namespace App\Packages\Exams\Controller;
 
 
 use App\Http\Controllers\Controller;
+use App\Packages\Exams\Facade\ThemeFacade;
 use App\Packages\Exams\Model\Theme;
-use App\Packages\Exams\Repository\ThemeRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ThemeController extends Controller
 {
     public function __construct(
-        protected ThemeRepository $themeRepository
+        protected ThemeFacade $themeFacade
     )
     {
     }
 
-    public function index(): array
+    public function index(): JsonResponse
     {
-        return $this->themeRepository->index();
+        $themes = $this->themeFacade->index();
+        return response()->json($themes->toArray(), 200);
     }
 
     public function store(Request $request): JsonResponse
     {
-        $theme = new Theme(
-            $request->get('name'),
-            $request->get('description')
-        );
-
-        $this->themeRepository->store($theme);
-
-        return response()->json($theme, 201);
+        $name = $request->get('name');
+        $description = $request->get('description');
+        $theme = $this->themeFacade->store($name, $description);
+        return response()->json($theme->toArray(), 201);
     }
 
-    public function update()
+    public function update(Request $request, string $id): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $name = $request->get('name');
+        $description = $request->get('description');
+        $theme = $this->themeFacade->update($id, $name, $description);
+        return response()->json($theme->toArray(), 200);
     }
 
-    public function show()
+    public function show(Request $request, string $id): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $theme = $this->themeFacade->show($id);
+        return response()->json($theme->toArray(), 200);
     }
 
-    public function destroy()
+    public function destroy(Request $request, string $id): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $this->themeFacade->destroy($id);
+        return response()->json('theme removed successfully', 204);
     }
 }
