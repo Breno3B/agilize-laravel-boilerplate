@@ -17,7 +17,7 @@ class StudentFacade
 
     public function index(): Collection
     {
-        $students = $this->studentRepository->findAllStudents();
+        $students = $this->studentRepository->index();
         $studentsCollection = collect();
 
         foreach ($students as $student) {
@@ -50,5 +50,35 @@ class StudentFacade
             'id'   => $student->getId(),
             'name' => $student->getName()
         ]);
+    }
+
+    public function update(string $id,string $name): Collection
+    {
+        $student = $this->studentRepository->findOneById($id);
+
+        $student->setName($name);
+        $student = $this->studentRepository->store($student);
+
+        return collect([
+            'id'   => $student->getId(),
+            'name' => $student->getName()
+        ]);
+    }
+
+    public function show(string $id): Collection
+    {
+        $student = $this->studentRepository->findOneById($id);
+
+        return collect([
+            'id'   => $student->getId(),
+            'name' => $student->getName()
+        ]);
+    }
+
+    public function destroy(string $id): void
+    {
+        $student = $this->studentRepository->findOneById($id);
+
+        $this->studentRepository->destroy($student);
     }
 }

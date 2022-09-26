@@ -28,7 +28,7 @@ Route::get('/healthcheck', function () {
 
 Route::get('/student', [StudentController::class, 'index']);
 Route::post('/student', [StudentController::class, 'store']);
-Route::put('/student', [StudentController::class, 'update']);
+Route::put('/student/{id}', [StudentController::class, 'update']);
 Route::get('/student/{id}', [StudentController::class, 'show']);
 Route::delete('/student/{id}', [StudentController::class, 'destroy']);
 
