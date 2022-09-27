@@ -5,7 +5,6 @@ namespace App\Packages\Exams\Controller;
 
 use App\Http\Controllers\Controller;
 use App\Packages\Exams\Facade\ThemeFacade;
-use App\Packages\Exams\Model\Theme;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -39,13 +38,13 @@ class ThemeController extends Controller
         return response()->json($theme->toArray(), 200);
     }
 
-    public function show(Request $request, string $id): JsonResponse
+    public function show(string $id): JsonResponse
     {
         $theme = $this->themeFacade->show($id);
         return response()->json($theme->toArray(), 200);
     }
 
-    public function destroy(Request $request, string $id): JsonResponse
+    public function destroy(string $id): JsonResponse
     {
         $this->themeFacade->destroy($id);
         return response()->json('theme removed successfully', 204);

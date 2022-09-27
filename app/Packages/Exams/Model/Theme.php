@@ -35,7 +35,8 @@ class Theme
      * @param  string  $name
      * @param  string  $description
      */
-    public function __construct(string $name, string $description) {
+    public function __construct(string $name, string $description)
+    {
         $this->id = Str::uuid()->toString();
         $this->name = $name;
         $this->description = $description;

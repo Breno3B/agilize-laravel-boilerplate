@@ -4,31 +4,49 @@ namespace App\Packages\Exams\Controller;
 
 
 use App\Http\Controllers\Controller;
+use App\Packages\Exams\Facade\QuestionFacade;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function index()
+    public function __construct(
+        protected QuestionFacade $questionFacade
+    )
     {
-        return response()->json(['status' => true]);
     }
 
-    public function store()
+    public function index(): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $questions = $this->questionFacade->index();
+        return response()->json($questions->toArray(), 200);
     }
 
-    public function update()
+    public function store(Request $request): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $themeId = $request->get('theme_id');
+        $description = $request->get('description');
+        $question = $this->questionFacade->store($themeId, $description);
+        return response()->json($question->toArray(), 201);
     }
 
-    public function show()
+    public function update(Request $request, string $id): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $themeId = $request->get('theme_id');
+        $description = $request->get('description');
+        $question = $this->questionFacade->update($id, $themeId, $description);
+        return response()->json($question->toArray(), 200);
     }
 
-    public function destroy()
+    public function show(string $id): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $question = $this->questionFacade->show($id);
+        return response()->json($question->toArray(), 200);
+    }
+
+    public function destroy(string $id): JsonResponse
+    {
+        $this->questionFacade->destroy($id);
+        return response()->json('question removed successfully', 204);
     }
 }
