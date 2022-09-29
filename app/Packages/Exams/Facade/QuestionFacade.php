@@ -30,7 +30,7 @@ class QuestionFacade
                     'description' => $question->getDescription()
                 ]
             );
-        };
+        }
 
         return $questionCollection;
     }
@@ -59,6 +59,10 @@ class QuestionFacade
 
         $theme = $this->themeRepository->findOneById($themeId);
 
+        if (!$theme) {
+            return collect([]);
+        }
+
         $question->setTheme($theme);
         $question->setDescription($description);
         $question = $this->questionRepository->store($question);
@@ -73,6 +77,10 @@ class QuestionFacade
     public function show(string $id): Collection
     {
         $question = $this->questionRepository->findOneById($id);
+
+        if (!$question) {
+            return collect([]);
+        }
 
         return collect([
             'id'   => $question->getId(),
