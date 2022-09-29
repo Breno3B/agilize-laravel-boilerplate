@@ -20,10 +20,10 @@ class AlternativeFacade
     public function index(): Collection
     {
         $alternatives = $this->alternativeRepository->index();
-        $alternativeCollection = collect();
+        $alternativesCollection = collect();
 
         foreach ($alternatives as $alternative) {
-            $alternativeCollection->add(
+            $alternativesCollection->add(
                 [
                     'id'   => $alternative->getId(),
                     'question' => $alternative->getQuestion()->getDescription(),
@@ -33,7 +33,7 @@ class AlternativeFacade
             );
         }
 
-        return $alternativeCollection;
+        return $alternativesCollection;
     }
 
     public function store(string $questionId, string $description, string $isCorrect): Collection

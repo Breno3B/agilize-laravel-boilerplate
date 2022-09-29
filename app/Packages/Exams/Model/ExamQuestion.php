@@ -22,7 +22,7 @@ class ExamQuestion
     protected string $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Exam")
+     * @ORM\ManyToOne(targetEntity="Exam", inversedBy="questions")
      */
     protected Exam $exam;
 

@@ -5,6 +5,8 @@ namespace App\Packages\Exams\Model;
 
 use App\Packages\Student\Model\Student;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Illuminate\Support\Str;
@@ -46,35 +48,32 @@ class Exam
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    protected float $totalScore;
+    protected float|null $totalScore;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected Datetime $startedAt;
+    protected Datetime|null $startedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected Datetime $finishedAt;
+    protected Datetime|null $finishedAt;
 
     /**
-     * @param  Student   $student
-     * @param  Theme     $theme
-     * @param  string    $status
-     * @param  int       $quantityOfQuestions
-     * @param  float     $totalScore
-     * @param  DateTime  $startedAt
-     * @param  DateTime  $finishedAt
+     * @ORM\OneToMany(targetEntity="ExamQuestion", mappedBy="exam", cascade={"all"}), orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"}))
      */
+    protected Collection $questions;
+
     public function __construct(
         Student $student,
         Theme $theme,
         string $status,
         int $quantityOfQuestions,
-        float $totalScore,
-        DateTime $startedAt,
-        DateTime $finishedAt
+        float|null $totalScore,
+        DateTime|null $startedAt,
+        DateTime|null $finishedAt
     ) {
         $this->id = Str::uuid()->toString();
         $this->student = $student;
@@ -84,6 +83,7 @@ class Exam
         $this->totalScore = $totalScore;
         $this->startedAt = $startedAt;
         $this->finishedAt = $finishedAt;
+        $this->questions = new ArrayCollection();
     }
 
     /**
@@ -135,9 +135,9 @@ class Exam
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getTotalScore(): float
+    public function getTotalScore(): float|null
     {
         return $this->totalScore;
     }
@@ -151,9 +151,9 @@ class Exam
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getStartedAt(): DateTime
+    public function getStartedAt(): DateTime|null
     {
         return $this->startedAt;
     }
@@ -167,9 +167,9 @@ class Exam
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getFinishedAt(): DateTime
+    public function getFinishedAt(): DateTime|null
     {
         return $this->finishedAt;
     }
@@ -180,5 +180,13 @@ class Exam
     public function setFinishedAt(DateTime $finishedAt): void
     {
         $this->finishedAt = $finishedAt;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
     }
 }
