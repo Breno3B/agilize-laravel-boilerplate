@@ -3,6 +3,8 @@
 namespace App\Packages\Exams\Model;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Illuminate\Support\Str;
@@ -22,7 +24,7 @@ class ExamQuestion
     protected string $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Exam")
+     * @ORM\ManyToOne(targetEntity="Exam", inversedBy="questions")
      */
     protected Exam $exam;
 
@@ -37,6 +39,11 @@ class ExamQuestion
     protected float $questionValue;
 
     /**
+     * @ORM\OneToMany(targetEntity="ExamAlternative", mappedBy="examQuestion", cascade={"all"}), orphanRemoval=true)
+     */
+    protected Collection $examsAlternatives;
+
+    /**
      * @param  Exam    $exam
      * @param  string  $description
      * @param  float   $questionValue
@@ -46,6 +53,7 @@ class ExamQuestion
         $this->exam = $exam;
         $this->description = $description;
         $this->questionValue = $questionValue;
+        $this->examsAlternatives = new ArrayCollection();
     }
 
     /**
