@@ -47,4 +47,13 @@ class QuestionRepository extends AbstractRepository
     {
         return $this->findOneBy(['themeId' => $themeId]);
     }
+
+    public function findAllByThemeId(string $themeId): array
+    {
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT question FROM App\Packages\Exams\Model\Question question WHERE question.theme = :themeId'
+        );
+        $query->setParameter('themeId', $themeId);
+        return $query->getResult();
+    }
 }

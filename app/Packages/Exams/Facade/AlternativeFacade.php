@@ -4,15 +4,15 @@ namespace App\Packages\Exams\Facade;
 
 
 use App\Packages\Exams\Model\Alternative;
-use App\Packages\Exams\Repository\AlternativeRepository;
-use App\Packages\Exams\Repository\QuestionRepository;
+use App\Packages\Exams\Repository\ExamAlternativeRepository;
+use App\Packages\Exams\Repository\ExamQuestionRepository;
 use Illuminate\Support\Collection;
 
 class AlternativeFacade
 {
     public function __construct(
-        protected AlternativeRepository $alternativeRepository,
-        protected QuestionRepository $questionRepository,
+        protected ExamAlternativeRepository $alternativeRepository,
+        protected ExamQuestionRepository $questionRepository,
     )
     {
     }

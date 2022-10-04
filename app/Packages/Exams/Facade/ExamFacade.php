@@ -4,7 +4,11 @@ namespace App\Packages\Exams\Facade;
 
 
 use App\Packages\Exams\Model\Exam;
+use App\Packages\Exams\Model\ExamAlternative;
+use App\Packages\Exams\Model\ExamQuestion;
 use App\Packages\Exams\Repository\AlternativeRepository;
+use App\Packages\Exams\Repository\ExamAlternativeRepository;
+use App\Packages\Exams\Repository\ExamQuestionRepository;
 use App\Packages\Exams\Repository\ExamRepository;
 use App\Packages\Exams\Repository\QuestionRepository;
 use App\Packages\Exams\Repository\ThemeRepository;
@@ -14,11 +18,13 @@ use Illuminate\Support\Collection;
 class ExamFacade
 {
     public function __construct(
-        protected ExamRepository $examRepository,
-        protected AlternativeRepository $alternativeRepository,
-        protected QuestionRepository $questionRepository,
-        protected ThemeRepository $themeRepository,
         protected StudentRepository $studentRepository,
+        protected ThemeRepository $themeRepository,
+        protected QuestionRepository $questionRepository,
+        protected AlternativeRepository $alternativeRepository,
+        protected ExamRepository $examRepository,
+        protected ExamQuestionRepository $examQuestionRepository,
+        protected ExamAlternativeRepository $examAlternativeRepository,
     )
     {
     }
@@ -27,7 +33,6 @@ class ExamFacade
     {
         $exams = $this->examRepository->index();
         $examsColelction = collect();
-//        dd($exams);
 
         foreach ($exams as $exam) {
             $examsColelction->add(
@@ -59,6 +64,7 @@ class ExamFacade
     {
         $student = $this->studentRepository->findOneById($studentId);
         $theme = $this->themeRepository->findOneById($themeId);
+        $questionValue = Exam::EXAM_MAX_SCORE / $quantityOfQuestions;
 
         if (!$student || !$theme) {
             return collect([]);
@@ -67,10 +73,32 @@ class ExamFacade
         $exam = new Exam($student, $theme, $status, $quantityOfQuestions, $totalScore, $startedAt, $finishedAt);
         $exam = $this->examRepository->store($exam);
 
-        // Questões
+        // ExamQuestions
+        $allQuestionsByTheme = $this->questionRepository->findAllByThemeId($themeId);
+        $examQuestionsIndexes = array_rand($allQuestionsByTheme, $quantityOfQuestions);
 
+        for ($i = 0; $i < $quantityOfQuestions; $i++) {
+            $question = $allQuestionsByTheme[$examQuestionsIndexes[$i]];
+            $examQuestion = new ExamQuestion(
+                $exam,
+                $question->getDescription(),
+                $questionValue
+            );
+            $this->examQuestionRepository->store($examQuestion);
 
-        //Alternativas
+            // Alternatives
+            $alternatives = $this->alternativeRepository->findAllByQuestionId($question->getId());
+            /** @var ExamAlternative $alternative */
+            foreach ($alternatives as $alternative) {
+                $examAlternative = new ExamAlternative(
+                    $examQuestion,
+                    $alternative->getDescription(),
+                    $alternative->isCorrect(),
+                    $alternative->isChosen()
+                );
+                $this->examAlternativeRepository->store($examAlternative);
+            }
+        }
 
         return collect([
             'id'   => $exam->getId(),

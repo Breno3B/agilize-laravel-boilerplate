@@ -33,18 +33,14 @@ class AlternativeRepository extends AbstractRepository
         return $this->findOneBy(['id' => $id]);
     }
 
-    public function findOneByDescription(string $description): ?Alternative
+    public function findAllByQuestionId(string $questionId): array
     {
-        return $this->findOneBy(['description' => $description]);
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT alternative FROM App\Packages\Exams\Model\Alternative alternative WHERE alternative.question = :questionId'
+        );
+        $query->setParameter('questionId', $questionId);
+        return $query->getResult();
     }
 
-    public function findOneByQuestionId(string $questionId): ?Alternative
-    {
-        return $this->findOneBy(['questionId' => $questionId]);
-    }
 
-    public function findOneByIsCorrect(string $isCorrect): ?Alternative
-    {
-        return $this->findOneBy(['isCorrect' => $isCorrect]);
-    }
 }

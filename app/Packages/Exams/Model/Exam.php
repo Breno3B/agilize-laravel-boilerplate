@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
  */
 class Exam
 {
+    const EXAM_MAX_SCORE = 10;
     use TimestampableEntity;
 
     /**
