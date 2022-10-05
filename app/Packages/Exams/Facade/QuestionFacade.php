@@ -4,14 +4,14 @@ namespace App\Packages\Exams\Facade;
 
 
 use App\Packages\Exams\Model\Question;
-use App\Packages\Exams\Repository\ExamQuestionRepository;
+use App\Packages\Exams\Repository\QuestionRepository;
 use App\Packages\Exams\Repository\ThemeRepository;
 use Illuminate\Support\Collection;
 
 class QuestionFacade
 {
     public function __construct(
-        protected ExamQuestionRepository $questionRepository,
+        protected QuestionRepository $questionRepository,
         protected ThemeRepository $themeRepository,
     )
     {
