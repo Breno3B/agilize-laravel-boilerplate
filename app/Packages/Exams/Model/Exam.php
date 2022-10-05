@@ -87,106 +87,82 @@ class Exam
         $this->questions = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return Student
-     */
     public function getStudent(): Student
     {
         return $this->student;
     }
 
-    /**
-     * @return Theme
-     */
+    public function setStudent(Student $student): void
+    {
+        $this->student = $student;
+    }
+
     public function getTheme(): Theme
     {
         return $this->theme;
     }
 
-    /**
-     * @return string
-     */
+    public function setTheme(Theme $theme): void
+    {
+        $this->theme = $theme;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
     }
 
-    /**
-     * @param  string  $status
-     */
     public function setStatus(string $status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantityOfQuestions(): int
     {
         return $this->quantityOfQuestions;
     }
 
-    /**
-     * @return float|null
-     */
+    public function setQuantityOfQuestions(int $quantityOfQuestions): void
+    {
+        $this->quantityOfQuestions = $quantityOfQuestions;
+    }
+
     public function getTotalScore(): float|null
     {
         return $this->totalScore;
     }
 
-    /**
-     * @param  float  $totalScore
-     */
     public function setTotalScore(float $totalScore): void
     {
         $this->totalScore = $totalScore;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getStartedAt(): DateTime|null
     {
         return $this->startedAt;
     }
 
-    /**
-     * @param  DateTime  $startedAt
-     */
     public function setStartedAt(DateTime $startedAt): void
     {
         $this->startedAt = $startedAt;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getFinishedAt(): DateTime|null
     {
         return $this->finishedAt;
     }
 
-    /**
-     * @param  DateTime  $finishedAt
-     */
     public function setFinishedAt(DateTime $finishedAt): void
     {
         $this->finishedAt = $finishedAt;
     }
 
-    /**
-     * @return Collection
-     */
-    public function getQuestions(): Collection
+    public function getExamQuestions(): Collection
     {
         return $this->questions;
     }

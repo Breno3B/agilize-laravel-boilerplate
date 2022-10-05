@@ -87,4 +87,9 @@ class ExamQuestion
     {
         return $this->questionValue;
     }
+
+    public function getExamAlternatives(): Collection
+    {
+        return $this->examsAlternatives;
+    }
 }

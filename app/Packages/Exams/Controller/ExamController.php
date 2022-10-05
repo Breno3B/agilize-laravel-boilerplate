@@ -26,9 +26,8 @@ class ExamController extends Controller
     {
         $studentId = $request->get('student_id');
         $themeId = $request->get('theme_id');
-        $status = $request->get('status');
         $quantityOfQuestions = $request->get('quantity_of_questions');
-        $exam = $this->examFacade->store($studentId, $themeId, $status, $quantityOfQuestions);
+        $exam = $this->examFacade->store($studentId, $themeId, $quantityOfQuestions);
         return response()->json($exam->toArray(), 201);
     }
 
@@ -36,6 +35,14 @@ class ExamController extends Controller
     {
         return response()->json(['status' => true]);
     }
+
+//    public function partialUpdate(string $id, Request $request): JsonResponse
+//    {
+//        $status = $request->get('status');
+//        $startedAt = $request->get('started_at');
+//        $exam = $this->examFacade->partialUpdate($id, $status, $startedAt);
+//        return response()->json($exam->toArray(), 200);
+//    }
 
     public function show()
     {

@@ -56,7 +56,6 @@ class QuestionFacade
     public function update(string $id, string $themeId, string $description): Collection
     {
         $question = $this->questionRepository->findOneById($id);
-
         $theme = $this->themeRepository->findOneById($themeId);
 
         if (!$theme) {
