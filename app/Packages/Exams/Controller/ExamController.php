@@ -50,8 +50,9 @@ class ExamController extends Controller
         return response()->json($exam->toArray(), 200);
     }
 
-    public function destroy()
+    public function destroy(string $id): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $this->examFacade->destroy($id);
+        return response()->json('exam removed successfully', 204);
     }
 }
