@@ -48,23 +48,19 @@ class ExamFacade
                     'totalScore'          => $exam->getTotalScore(),
                     'startedAt'           => $exam->getStartedAt(),
                     'finishedAt'          => $exam->getFinishedAt(),
-                    'questions'           => $exam->getExamQuestions()->map(
-                        function (ExamQuestion $examQuestion) {
+                    'questions'           => $exam->getExamQuestions()->map(function (ExamQuestion $examQuestion) {
                             return [
                                 'id'            => $examQuestion->getId(),
                                 'question'      => $examQuestion->getDescription(),
                                 'questionValue' => $examQuestion->getQuestionValue(),
-                                'alternatives'  => $examQuestion->getExamAlternatives()->map(
-                                    function (ExamAlternative $examAlternative) {
-                                        return [
-                                            'id'          => $examAlternative->getId(),
-                                            'alternative' => $examAlternative->getDescription(),
-                                        ];
-                                    }
-                                )->toArray(),
+                                'alternatives'  => $examQuestion->getExamAlternatives()->map(function (ExamAlternative $examAlternative) {
+                                    return [
+                                        'id'          => $examAlternative->getId(),
+                                        'alternative' => $examAlternative->getDescription(),
+                                    ];
+                                })->toArray(),
                             ];
-                        }
-                    )->toArray(),
+                    })->toArray(),
                 ]
             );
         }
