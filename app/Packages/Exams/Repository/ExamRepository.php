@@ -39,39 +39,4 @@ class ExamRepository extends AbstractRepository
     {
         return $this->findOneBy(['id' => $id]);
     }
-
-    public function findOneByStudentId(string $studentId): ?Exam
-    {
-        return $this->findOneBy(['studentId' => $studentId]);
-    }
-
-    public function findOneByThemeId(string $themeId): ?Exam
-    {
-        return $this->findOneBy(['themeId' => $themeId]);
-    }
-
-    public function findOneByStatus(string $status): ?Exam
-    {
-        return $this->findOneBy(['status' => $status]);
-    }
-
-    public function findOneByQuantityOfQuestions(string $quantityOfQuestions): ?Exam
-    {
-        return $this->findOneBy(['quantityOfQuestions' => $quantityOfQuestions]);
-    }
-
-    public function findOneByTotalScore(string $totalScore): ?Exam
-    {
-        return $this->findOneBy(['totalScore' => $totalScore]);
-    }
-
-    public function findOneByStartedAt(string $startedAt): ?Exam
-    {
-        return $this->findOneBy(['startedAt' => $startedAt]);
-    }
-
-    public function findOneByFinishedAt(string $finishedAt): ?Exam
-    {
-        return $this->findOneBy(['finishedAt' => $finishedAt]);
-    }
 }

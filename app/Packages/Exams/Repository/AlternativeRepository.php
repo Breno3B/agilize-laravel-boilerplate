@@ -41,6 +41,4 @@ class AlternativeRepository extends AbstractRepository
         $query->setParameter('questionId', $questionId);
         return $query->getResult();
     }
-
-
 }

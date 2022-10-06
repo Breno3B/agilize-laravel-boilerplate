@@ -33,21 +33,6 @@ class QuestionRepository extends AbstractRepository
         return $this->findOneBy(['id' => $id]);
     }
 
-    public function findOneByName(string $name): ?Question
-    {
-        return $this->findOneBy(['name' => $name]);
-    }
-
-    public function findOneByDescription(string $description): ?Question
-    {
-        return $this->findOneBy(['description' => $description]);
-    }
-
-    public function findOneByThemeId(string $themeId): ?Question
-    {
-        return $this->findOneBy(['themeId' => $themeId]);
-    }
-
     public function findAllByThemeId(string $themeId): array
     {
         $query = $this->getEntityManager()->createQuery(

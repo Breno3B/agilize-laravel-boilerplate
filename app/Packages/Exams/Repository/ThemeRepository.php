@@ -37,9 +37,4 @@ class ThemeRepository extends AbstractRepository
     {
         return $this->findOneBy(['name' => $name]);
     }
-
-    public function findOneByDescription(string $description): ?Theme
-    {
-        return $this->findOneBy(['description' => $description]);
-    }
 }
