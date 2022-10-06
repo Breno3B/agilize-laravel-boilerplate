@@ -70,6 +70,7 @@ class AlternativeFacade
         $alternative->setIsCorrect($isCorrect);
 
         $alternative = $this->alternativeRepository->store($alternative);
+
         return collect([
             'id'   => $alternative->getId(),
             'question' => $alternative->getQuestion()->getDescription(),
