@@ -13,6 +13,7 @@ use App\Packages\Exams\Repository\ExamRepository;
 use App\Packages\Exams\Repository\QuestionRepository;
 use App\Packages\Exams\Repository\ThemeRepository;
 use App\Packages\Student\Repository\StudentRepository;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Collection;
 
@@ -39,27 +40,31 @@ class ExamFacade
         foreach ($exams as $exam) {
             $examsColelction->add(
                 [
-                    'id'   => $exam->getId(),
-                    'student' => $exam->getStudent()->getName(),
-                    'theme' => $exam->getTheme()->getDescription(),
-                    'status' => $exam->getStatus(),
+                    'id'                  => $exam->getId(),
+                    'student'             => $exam->getStudent()->getName(),
+                    'theme'               => $exam->getTheme()->getDescription(),
+                    'status'              => $exam->getStatus(),
                     'quantityOfQuestions' => $exam->getQuantityOfQuestions(),
-                    'totalScore' => $exam->getTotalScore(),
-                    'startedAt' => $exam->getStartedAt(),
-                    'finishedAt' => $exam->getFinishedAt(),
-                    'questions' => $exam->getExamQuestions()->map(function (ExamQuestion $examQuestion) {
-                        return [
-                            'id' => $examQuestion->getId(),
-                            'question' => $examQuestion->getDescription(),
-                            'questionValue' => $examQuestion->getQuestionValue(),
-                            'alternatives' => $examQuestion->getExamAlternatives()->map(function (ExamAlternative $examAlternative) {
-                                return [
-                                    'id' => $examAlternative->getId(),
-                                    'alternative' => $examAlternative->getDescription(),
-                                ];
-                            })->toArray(),
-                        ];
-                    })->toArray(),
+                    'totalScore'          => $exam->getTotalScore(),
+                    'startedAt'           => $exam->getStartedAt(),
+                    'finishedAt'          => $exam->getFinishedAt(),
+                    'questions'           => $exam->getExamQuestions()->map(
+                        function (ExamQuestion $examQuestion) {
+                            return [
+                                'id'            => $examQuestion->getId(),
+                                'question'      => $examQuestion->getDescription(),
+                                'questionValue' => $examQuestion->getQuestionValue(),
+                                'alternatives'  => $examQuestion->getExamAlternatives()->map(
+                                    function (ExamAlternative $examAlternative) {
+                                        return [
+                                            'id'          => $examAlternative->getId(),
+                                            'alternative' => $examAlternative->getDescription(),
+                                        ];
+                                    }
+                                )->toArray(),
+                            ];
+                        }
+                    )->toArray(),
                 ]
             );
         }
@@ -85,7 +90,15 @@ class ExamFacade
             return collect([]);
         }
 
-        $exam = new Exam($student, $theme, $status, $quantityOfQuestions, $totalScore, $startedAt, $finishedAt);
+        $exam = new Exam(
+            $student,
+            $theme,
+            $status,
+            $quantityOfQuestions,
+            $totalScore,
+            Carbon::now(),
+            $finishedAt
+        );
         $exam = $this->examRepository->store($exam);
 
         // ExamQuestions
@@ -116,14 +129,14 @@ class ExamFacade
         }
 
         return collect([
-            'id'   => $exam->getId(),
-            'student' => $exam->getStudent()->getName(),
-            'theme' => $exam->getTheme()->getDescription(),
-            'status' => $exam->getStatus(),
+            'id'                  => $exam->getId(),
+            'student'             => $exam->getStudent()->getName(),
+            'theme'               => $exam->getTheme()->getDescription(),
+            'status'              => $exam->getStatus(),
             'quantityOfQuestions' => $exam->getQuantityOfQuestions(),
-            'totalScore' => $exam->getTotalScore(),
-            'startedAt' => $exam->getStartedAt(),
-            'finishedAt' => $exam->getFinishedAt(),
+            'totalScore'          => $exam->getTotalScore(),
+            'startedAt'           => $exam->getStartedAt(),
+            'finishedAt'          => $exam->getFinishedAt(),
         ]);
     }
 
