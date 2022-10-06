@@ -31,7 +31,7 @@ class ExamController extends Controller
         return response()->json($exam->toArray(), 201);
     }
 
-    public function update()
+    public function update(): JsonResponse
     {
         return response()->json(['status' => true]);
     }

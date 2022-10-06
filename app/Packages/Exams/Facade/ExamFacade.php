@@ -74,7 +74,6 @@ class ExamFacade
         string $quantityOfQuestions,
         string $status = "Aberta",
         float|null $totalScore = null,
-        DateTime|null $startedAt = null,
         DateTime|null $finishedAt = null
     ): Collection
     {
