@@ -22,6 +22,13 @@ class ExamRepository extends AbstractRepository
         return $exam;
     }
 
+    public function update(Exam $exam): Exam
+    {
+        $this->getEntityManager()->persist($exam);
+        $this->getEntityManager()->flush();
+        return $exam;
+    }
+
     public function destroy(Exam $exam): void
     {
         $this->getEntityManager()->remove($exam);

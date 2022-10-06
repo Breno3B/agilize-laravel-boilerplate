@@ -22,9 +22,21 @@ class ExamAlternativeRepository extends AbstractRepository
         return $examAlternative;
     }
 
+    public function update(?ExamAlternative $examAlternative): ExamAlternative
+    {
+        $this->getEntityManager()->persist($examAlternative);
+        $this->getEntityManager()->flush();
+        return $examAlternative;
+    }
+
     public function destroy(ExamAlternative $examAlternative): void
     {
         $this->getEntityManager()->remove($examAlternative);
         $this->getEntityManager()->flush();
+    }
+
+    public function findOneById(string $id): ?ExamAlternative
+    {
+        return $this->findOneBy(['id' => $id]);
     }
 }

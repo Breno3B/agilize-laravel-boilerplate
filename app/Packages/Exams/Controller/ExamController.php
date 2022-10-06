@@ -31,18 +31,13 @@ class ExamController extends Controller
         return response()->json($exam->toArray(), 201);
     }
 
-    public function update(): JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $status = $request->get('status');
+        $questions = $request->get('questions');
+        $exam = $this->examFacade->update($id, $status, $questions);
+        return response()->json($exam->toArray(), 200);
     }
-
-//    public function partialUpdate(string $id, Request $request): JsonResponse
-//    {
-//        $status = $request->get('status');
-//        $startedAt = $request->get('started_at');
-//        $exam = $this->examFacade->partialUpdate($id, $status, $startedAt);
-//        return response()->json($exam->toArray(), 200);
-//    }
 
     public function show(string $id): JsonResponse
     {

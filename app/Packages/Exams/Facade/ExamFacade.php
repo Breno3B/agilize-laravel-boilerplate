@@ -135,74 +135,6 @@ class ExamFacade
         ]);
     }
 
-//    public function update(
-//        string $id,
-//        string $studentId,
-//        string $themeId,
-//        string $status,
-//        string $quantityOfQuestions,
-//        float|null $totalScore = null,
-//        DateTime|null $startedAt = null,
-//        DateTime|null $finishedAt = null
-//    ): Collection
-//    {
-//        $exam = $this->examRepository->findOneById($id);
-//        $student = $this->studentRepository->findOneById($studentId);
-//        $theme = $this->themeRepository->findOneById($themeId);
-//
-//        if (!$exam || !$student || !$theme) {
-//            return collect([]);
-//        }
-//
-//        $exam->setStudent($student);
-//        $exam->setTheme($theme);
-//        $exam->setStatus($status);
-//        $exam->setQuantityOfQuestions($quantityOfQuestions);
-//        $exam->setTotalScore($totalScore);
-//        $exam->setStartedAt($startedAt);
-//        $exam->setFinishedAt($finishedAt);
-//        $exam = $this->examRepository->store($exam);
-//
-//        return collect([
-//            'id'   => $exam->getId(),
-//            'student' => $exam->getStudent()->getName(),
-//            'theme' => $exam->getTheme()->getDescription(),
-//            'status' => $exam->getStatus(),
-//            'quantityOfQuestions' => $exam->getQuantityOfQuestions(),
-//            'totalScore' => $exam->getTotalScore(),
-//            'startedAt' => $exam->getStartedAt(),
-//            'finishedAt' => $exam->getFinishedAt(),
-//        ]);
-//    }
-//
-//    public function partialUpdate(
-//        string $id,
-//        string $status,
-//        DateTime|null $startedAt = null,
-//    ): Collection
-//    {
-//        $exam = $this->examRepository->findOneById($id);
-//
-//        if (!$exam) {
-//            return collect([]);
-//        }
-//
-//        $exam->setStatus($status);
-//        $exam->setStartedAt($startedAt);
-//        $exam = $this->examRepository->store($exam);
-//
-//        return collect([
-//            'id'   => $exam->getId(),
-//            'student' => $exam->getStudent()->getName(),
-//            'theme' => $exam->getTheme()->getDescription(),
-//            'status' => $exam->getStatus(),
-//            'quantityOfQuestions' => $exam->getQuantityOfQuestions(),
-//            'totalScore' => $exam->getTotalScore(),
-//            'startedAt' => $exam->getStartedAt(),
-//            'finishedAt' => $exam->getFinishedAt(),
-//            'questions' => $exam->getExamQuestions()->toArray(),
-//        ]);
-//    }
     public function show(string $id): Collection
     {
         $exam = $this->examRepository->findOneById($id);
@@ -211,31 +143,31 @@ class ExamFacade
             return collect([]);
         }
 
-        return collect([
-            'id'                  => $exam->getId(),
-            'student'             => $exam->getStudent()->getName(),
-            'theme'               => $exam->getTheme()->getDescription(),
-            'status'              => $exam->getStatus(),
-            'quantityOfQuestions' => $exam->getQuantityOfQuestions(),
-            'totalScore'          => $exam->getTotalScore(),
-            'startedAt'           => $exam->getStartedAt(),
-            'finishedAt'          => $exam->getFinishedAt(),
-            'questions'           => $exam->getExamQuestions()->map(function (ExamQuestion $examQuestion) {
-                return [
-                    'id'          => $examQuestion->getId(),
-                    'question'    => $examQuestion->getDescription(),
-                    'questionValue' => $examQuestion->getQuestionValue(),
-                    'alternatives'  => $examQuestion->getExamAlternatives()->map(function (ExamAlternative $examAlternative) {
-                        return [
-                            'id'          => $examAlternative->getId(),
-                            'alternative' => $examAlternative->getDescription(),
-                            'isCorrect'   => $examAlternative->isCorrect(),
-                            'isChosen'    => $examAlternative->isChosen(),
-                        ];
-                    })->toArray(),
-                ];
-            })->toArray(),
-        ]);
+        return $this->getCompleteExamCollect($exam);
+    }
+
+    public function update(string $id, string $status, $questions)
+    {
+        $exam = $this->examRepository->findOneById($id);
+
+        if (!$exam) {
+            return false;
+        }
+
+        $exam->setStatus($status);
+        $exam->setFinishedAt(Carbon::now());
+
+        $this->examRepository->update($exam);
+
+        foreach ($questions as $question) {
+            foreach ($question['alternatives'] as $alternative) {
+                $examAlternative = $this->examAlternativeRepository->findOneById($alternative['id']);
+                $examAlternative->setIsChosen($alternative['isChosen']);
+                $this->examAlternativeRepository->update($examAlternative);
+            }
+        }
+
+        return $this->getCompleteExamCollect($exam);
     }
 
     public function destroy(string $id): bool
@@ -249,5 +181,39 @@ class ExamFacade
         $this->examRepository->destroy($exam);
 
         return true;
+    }
+
+    /**
+     * @param  Exam  $exam
+     *
+     * @return Collection
+     */
+    public function getCompleteExamCollect(Exam $exam): Collection
+    {
+        return collect([
+            'id'                  => $exam->getId(),
+            'student'             => $exam->getStudent()->getName(),
+            'theme'               => $exam->getTheme()->getDescription(),
+            'status'              => $exam->getStatus(),
+            'quantityOfQuestions' => $exam->getQuantityOfQuestions(),
+            'totalScore'          => $exam->getTotalScore(),
+            'startedAt'           => $exam->getStartedAt(),
+            'finishedAt'          => $exam->getFinishedAt(),
+            'questions'           => $exam->getExamQuestions()->map(function (ExamQuestion $examQuestion) {
+                return [
+                    'id'            => $examQuestion->getId(),
+                    'question'      => $examQuestion->getDescription(),
+                    'questionValue' => $examQuestion->getQuestionValue(),
+                    'alternatives'  => $examQuestion->getExamAlternatives()->map(function (ExamAlternative $examAlternative) {
+                        return [
+                            'id'          => $examAlternative->getId(),
+                            'alternative' => $examAlternative->getDescription(),
+                            'isCorrect'   => $examAlternative->isCorrect(),
+                            'isChosen'    => $examAlternative->isChosen( ),
+                        ];
+                    })->toArray(),
+                ];
+            })->toArray(),
+        ]);
     }
 }

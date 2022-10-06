@@ -53,6 +53,5 @@ Route::delete('/alternative/{id}', [AlternativeController::class, 'destroy']);
 Route::get('/exam', [ExamController::class, 'index']);
 Route::post('/exam', [ExamController::class, 'store']);
 Route::put('/exam/{id}', [ExamController::class, 'update']);
-Route::patch('/exam/{id}', [ExamController::class, 'partialUpdate']);
 Route::get('/exam/{id}', [ExamController::class, 'show']);
 Route::delete('/exam/{id}', [ExamController::class, 'destroy']);
