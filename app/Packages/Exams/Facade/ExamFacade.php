@@ -238,4 +238,17 @@ class ExamFacade
             })->toArray(),
         ]);
     }
+
+    public function destroy(string $id): bool
+    {
+        $exam = $this->examRepository->findOneById($id);
+
+        if (!$exam) {
+            return false;
+        }
+
+        $this->examRepository->destroy($exam);
+
+        return true;
+    }
 }
