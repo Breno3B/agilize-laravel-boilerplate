@@ -44,9 +44,10 @@ class ExamController extends Controller
 //        return response()->json($exam->toArray(), 200);
 //    }
 
-    public function show()
+    public function show(string $id): JsonResponse
     {
-        return response()->json(['status' => true]);
+        $exam = $this->examFacade->show($id);
+        return response()->json($exam->toArray(), 200);
     }
 
     public function destroy()
