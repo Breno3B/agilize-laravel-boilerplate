@@ -204,4 +204,38 @@ class ExamFacade
 //            'questions' => $exam->getExamQuestions()->toArray(),
 //        ]);
 //    }
+    public function show(string $id): Collection
+    {
+        $exam = $this->examRepository->findOneById($id);
+
+        if (!$exam) {
+            return collect([]);
+        }
+
+        return collect([
+            'id'                  => $exam->getId(),
+            'student'             => $exam->getStudent()->getName(),
+            'theme'               => $exam->getTheme()->getDescription(),
+            'status'              => $exam->getStatus(),
+            'quantityOfQuestions' => $exam->getQuantityOfQuestions(),
+            'totalScore'          => $exam->getTotalScore(),
+            'startedAt'           => $exam->getStartedAt(),
+            'finishedAt'          => $exam->getFinishedAt(),
+            'questions'           => $exam->getExamQuestions()->map(function (ExamQuestion $examQuestion) {
+                return [
+                    'id'          => $examQuestion->getId(),
+                    'question'    => $examQuestion->getDescription(),
+                    'questionValue' => $examQuestion->getQuestionValue(),
+                    'alternatives'  => $examQuestion->getExamAlternatives()->map(function (ExamAlternative $examAlternative) {
+                        return [
+                            'id'          => $examAlternative->getId(),
+                            'alternative' => $examAlternative->getDescription(),
+                            'isCorrect'   => $examAlternative->isCorrect(),
+                            'isChosen'    => $examAlternative->isChosen(),
+                        ];
+                    })->toArray(),
+                ];
+            })->toArray(),
+        ]);
+    }
 }
